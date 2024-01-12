@@ -20,6 +20,11 @@ public class VegetableOrFruitItemBuilder implements ItemBuilder {
         return this;
     }
 
+    @Override
+    public ItemBuilder setColor(String color) {
+        return this;
+    }
+
     @Override public Item build() {
         return new VegetableOrFruitItem(name, price);
     }

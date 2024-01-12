@@ -6,6 +6,7 @@ public class SingletonItemBuilder implements ItemBuilder {
     private static SingletonItemBuilder instance;
     private String name;
     private double price;
+    private String color;
 
     private SingletonItemBuilder() {
         // Private constructor to prevent instantiation
@@ -31,6 +32,12 @@ public class SingletonItemBuilder implements ItemBuilder {
     }
 
     @Override
+    public ItemBuilder setColor(String color) {
+        this.color = color;
+        return this;
+    }
+
+    @Override
     public Item build() {
         // Implementation for building the item
         // Assuming the builder creates a generic Item for simplicity
@@ -44,6 +51,9 @@ public class SingletonItemBuilder implements ItemBuilder {
             public double getPrice() {
                 return price;
             }
+
+            @Override
+            public String getColor() { return color; }
         };
     }
 }

@@ -20,6 +20,11 @@ public class BakeryItemBuilder implements ItemBuilder {
         return this;
     }
 
+    @Override
+    public ItemBuilder setColor(String color) {
+        return this;
+    }
+
     @Override public Item build() {
         return new BakeryItem(name, price);
     }

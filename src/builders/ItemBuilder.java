@@ -7,5 +7,7 @@ public interface ItemBuilder {
 
     ItemBuilder setPrice(double price);
 
+    ItemBuilder setColor(String color);
+
     Item build();
 }

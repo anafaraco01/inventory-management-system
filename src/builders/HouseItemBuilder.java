@@ -8,6 +8,8 @@ public class HouseItemBuilder implements ItemBuilder {
 
     private double price;
 
+    private String color;
+
     @Override
     public ItemBuilder setName(String name) {
         this.name = name;
@@ -19,8 +21,13 @@ public class HouseItemBuilder implements ItemBuilder {
         this.price = price;
         return this;
     }
+    
+    public ItemBuilder setColor(String color) {
+        this.color = color;
+        return this;
+    }
 
     @Override public Item build() {
-        return new HouseItem(name, price);
+        return new HouseItem(name, price, color);
     }
 }

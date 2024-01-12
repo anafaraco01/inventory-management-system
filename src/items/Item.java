@@ -1,4 +1,7 @@
 package items;
 
-public class Item {
+// Item interface representing the product
+public interface Item {
+    String getName();
+    double getPrice();
 }

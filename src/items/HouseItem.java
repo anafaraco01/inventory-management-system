@@ -1,6 +1,8 @@
 package items;
 
-public class HouseItem implements Item {
+import observers.InventoryObserver;
+
+public class HouseItem implements Item, InventoryObserver {
     private String name;
     private double price;
     private String color;
@@ -22,4 +24,8 @@ public class HouseItem implements Item {
     }
 
     public String getColor() { return color; }
+    public void update(Item item) {
+        System.out.println("House Item updated: " + item.getName());
+        // Implement logic to handle the update of electronic items
+    }
 }

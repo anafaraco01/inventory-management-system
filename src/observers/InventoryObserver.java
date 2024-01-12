@@ -1,4 +1,7 @@
 package observers;
 
-public class InventoryObserver {
+import items.Item;
+
+public interface InventoryObserver {
+    void update(Item item);
 }

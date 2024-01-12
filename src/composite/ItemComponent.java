@@ -1,4 +1,6 @@
 package composite;
 
-public class ItemComponent {
+public interface ItemComponent {
+    String getName();
+    double getPrice();
 }

@@ -6,6 +6,10 @@ import commands.AddItemCommand;
 import commands.Command;
 import commands.RemoveItemCommand;
 import commands.UpdateItemCommand;
+import composite.IndividualItem;
+import composite.ItemCategory;
+import composite.ItemComponent;
+import decorators.DiscountDecorator;
 import items.Item;
 import observers.HouseItemObserver;
 import observers.Inventory;
@@ -53,5 +57,16 @@ public class Main {
 
         // Notify observers when an item is updated
         inventory.notifyObservers(backeryItem);
+
+        // Create items to add to category
+        ItemComponent table = new IndividualItem("table", 50.00);
+        ItemComponent chair = new IndividualItem("chair", 10.00);
+
+        // Create a category and add items there (one with discount)
+        ItemCategory houseCategory = new ItemCategory("House");
+        houseCategory.addItem(table);
+        houseCategory.addItem(new DiscountDecorator(chair, 10.0));
+
+        System.out.println("Total price of House items: $" + houseCategory.getPrice());
     }
 }

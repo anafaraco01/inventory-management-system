@@ -25,14 +25,58 @@ public class Main {
         System.out.println("       /   \\        ");
         System.out.println("     /       \\     ");
         System.out.println("   /      #    \\  ");
-        System.out.println(" /  ## #  # ###  \\        Welcome to Albert Heijn");
+        System.out.println(" /  ## #  # ###  \\        Welcome to Albert Heijn's");
         System.out.println("|  #   #  ##  ##  |             Inventory Management System!");
         System.out.println("|  #   #  #    #  |");
         System.out.println("|   ## #  #    #  |");
         System.out.println("|_________________|");
+        Scanner scanner = new Scanner(System.in);
 
         // Using the Singleton ItemBuilder
         SingletonItemBuilder itemBuilder = SingletonItemBuilder.getInstance();
+        boolean createAnotherItem = true;
+
+        System.out.print("Do you want to add an item? (yes/no): ");
+        String userInput = scanner.nextLine().toLowerCase();
+
+        // Item creation using singleton instance of the builder
+        while (createAnotherItem) {
+
+            if (userInput.equals("yes")) {
+                System.out.print("Enter the name of the item: ");
+                String name = scanner.nextLine();
+
+                System.out.print("Enter the price of the item: €");
+                double price = Double.parseDouble(scanner.nextLine());
+
+                System.out.print("Do you want to include a color for the item? (yes/no): ");
+                String hasSpecialColor = scanner.nextLine().toLowerCase();
+
+                String color = null;
+                if (hasSpecialColor.equals("yes")) {
+                    System.out.print("Enter the color of the item: ");
+                    color = scanner.nextLine();
+                }
+
+                Item newItem = itemBuilder
+                        .setName(name)
+                        .setPrice(price)
+                        .setColor(color)
+                        .build();
+
+                System.out.println("Created Item: " + newItem.getName());
+                System.out.println("Price: €" + newItem.getPrice());
+                if (newItem.getColor() != null) {
+                    System.out.println("Color: " + newItem.getColor());
+                }
+
+                System.out.print("Do you want to create another item? (yes/no): ");
+                userInput = scanner.nextLine().toLowerCase();
+                createAnotherItem = userInput.equals("yes");
+            } else {
+                createAnotherItem = false;
+            }
+        }
 
         // Building an Item
         ItemBuilder backeryItemBuilder = new BakeryItemBuilder();

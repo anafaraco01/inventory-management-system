@@ -20,7 +20,7 @@ Console interface
 ## Design patterns
 
 ### Creational
-- Factory Method Pattern for item creation
+- Singleton Method Pattern for single item builder instance
 - Builder Pattern for complex items
 
 ### Behavioral
@@ -30,3 +30,13 @@ Console interface
 ### Structural
 - Composite Pattern for handling item hierarchies
 - Decorator Pattern for flexible item modification
+
+## Class diagrams
+### Builders
+![](D:\inventory-management\src\img\builderDiagram.png)
+### Items
+![](D:\inventory-management\src\img\itemBuilder.png)
+### Composite
+![](D:\inventory-management\src\img\compositeDiagram.png)
+### Decorators
+![](D:\inventory-management\src\img\decoratorBuilder.png)

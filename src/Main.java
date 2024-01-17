@@ -14,10 +14,23 @@ import items.Item;
 import observers.HouseItemObserver;
 import observers.Inventory;
 
+import java.util.Objects;
+import java.util.Scanner;
+
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
+        System.out.println("         ^           ");
+        System.out.println("       /   \\        ");
+        System.out.println("     /       \\     ");
+        System.out.println("   /      #    \\  ");
+        System.out.println(" /  ## #  # ###  \\        Welcome to Albert Heijn");
+        System.out.println("|  #   #  ##  ##  |             Inventory Management System!");
+        System.out.println("|  #   #  #    #  |");
+        System.out.println("|   ## #  #    #  |");
+        System.out.println("|_________________|");
+
         // Using the Singleton ItemBuilder
         SingletonItemBuilder itemBuilder = SingletonItemBuilder.getInstance();
 
@@ -60,13 +73,24 @@ public class Main {
 
         // Create items to add to category
         ItemComponent table = new IndividualItem("table", 50.00);
+        System.out.println("Table is created");
         ItemComponent chair = new IndividualItem("chair", 10.00);
-
-        // Create a category and add items there (one with discount)
+        System.out.println("Chair is created");
         ItemCategory houseCategory = new ItemCategory("House");
+        System.out.println("House category is created");
         houseCategory.addItem(table);
-        houseCategory.addItem(new DiscountDecorator(chair, 10.0));
+        System.out.println("Table is added to House category");
 
-        System.out.println("Total price of House items: $" + houseCategory.getPrice());
+        System.out.println("Do you want to add a discount to a chair?");
+        Scanner scannerForDiscount = new Scanner(System.in);
+        String input = scannerForDiscount.nextLine();
+        if (Objects.equals(input, "yes") || Objects.equals(input, "Yes")) {
+            System.out.println("How much in percents do you want the discount to be?");
+            Scanner scannerForDiscountAmount = new Scanner(System.in);
+            double inputAmount = scannerForDiscountAmount.nextDouble();
+            // Add chair in category with discount
+            houseCategory.addItem(new DiscountDecorator(chair, inputAmount));
+            System.out.println("Total price of House items: $" + houseCategory.getPrice());
+        }
     }
 }

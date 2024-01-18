@@ -22,6 +22,7 @@ public class Main {
     public static final String GREEN = "\u001B[32m";
     public static final String BLUE = "\u001B[34m";
     public static final String RESET = "\u001B[0m";
+
     public static void main(String[] args) {
         System.out.println("         ^           ");
         System.out.println("       /   \\        ");
@@ -67,9 +68,9 @@ public class Main {
                         .build();
 
                 System.out.println(GREEN + "Created Item: " + newItem.getName());
-                System.out.println("Price: €" + newItem.getPrice()+ RESET);
+                System.out.println("Price: €" + newItem.getPrice() + RESET);
                 if (newItem.getColor() != null) {
-                    System.out.println(GREEN + "Color: " + newItem.getColor()+ RESET);
+                    System.out.println(GREEN + "Color: " + newItem.getColor() + RESET);
                 }
 
                 System.out.print(BLUE + "Do you want to create another item? (yes/no): " + RESET);
@@ -111,5 +112,76 @@ public class Main {
         BakeryItemObserver bakeryItemObserver = new BakeryItemObserver();
         MeatItemObserver meatItemObserver = new MeatItemObserver();
         Inventory inventory = new Inventory();
+
+        System.out.print(BLUE + "Do you want to add a Vanilla Muffin to the Bakery Items? (yes/no): " + RESET);
+        String addCommandInput = scanner.nextLine().toLowerCase();
+        if (addCommandInput.equals("yes")) {
+            addItemCommand.execute();
+            inventory.addObserver(bakeryItemObserver);
+        }
+
+        System.out.print(BLUE + "Do you want to update the Blender Price of a House Items to €49.99 and the color to yellow? (yes/no): " + RESET);
+        String updateCommandInput = scanner.nextLine().toLowerCase();
+        if (updateCommandInput.equals("yes")) {
+            updateItemCommand.execute();
+            inventory.addObserver(houseItemObserver);
+        }
+
+        System.out.print(BLUE + "Do you want to remove the Salmon Item of the Meat Category? (yes/no): " + RESET);
+        String removeCommandInput = scanner.nextLine().toLowerCase();
+        if (removeCommandInput.equals("yes")) {
+            removeItemCommand.execute();
+            inventory.addObserver(meatItemObserver);
+        }
+
+        System.out.print(BLUE + "Do you want to see the notifications? (yes/no): " + RESET);
+        String seeNotificationsInput = scanner.nextLine().toLowerCase();
+
+        boolean anyNotificationSent = false;
+        if (seeNotificationsInput.equals("yes")) {
+            // Send Notifications
+            if (addCommandInput.equals("yes")) {
+                inventory.notifyObservers(bakeryItem);
+                anyNotificationSent = true;
+            }
+            if (updateCommandInput.equals("yes")) {
+                inventory.notifyObservers(houseItem);
+                anyNotificationSent = true;
+            }
+            if (removeCommandInput.equals("yes")) {
+                inventory.notifyObservers(meatItem);
+                anyNotificationSent = true;
+            }
+            if (!anyNotificationSent) {
+                System.out.println("There are no new notifications.");
+            }
+        }
+
+        // Create items to add to category
+        ItemComponent table = new IndividualItem("table", 50.00);
+        ItemComponent chair = new IndividualItem("chair", 10.00);
+        ItemCategory houseCategory = new ItemCategory("House");
+        System.out.println(BLUE + "Do you want to add a table to House category? (yes/no) " + RESET);
+        Scanner scannerForTable = new Scanner(System.in);
+        String tableInput = scannerForTable.nextLine();
+        if (Objects.equals(tableInput, "yes")) {
+            houseCategory.addItem(table);
+            System.out.println(BLUE + "Table was added to House category" + RESET);
+        }
+
+        System.out.println(BLUE + "Do you want to add a discount to a chair? (yes/no) " + RESET);
+        Scanner scannerForDiscount = new Scanner(System.in);
+        String input = scannerForDiscount.nextLine();
+        if (Objects.equals(input, "yes") || Objects.equals(input, "Yes")) {
+            System.out.println(BLUE + "How much in percentage do you want the discount to be? " + RESET);
+            Scanner scannerForDiscountAmount = new Scanner(System.in);
+            double inputAmount = scannerForDiscountAmount.nextDouble();
+            // Add chair in category with discount
+            houseCategory.addItem(new DiscountDecorator(chair, inputAmount));
+            System.out.println("Total price of House items: $" + houseCategory.getPrice());
+        }
+
+        System.out.println(BLUE + "Well that's it for today! Thank you for choosing Albert Heijn's Inventory Management System" + RESET);
+        System.out.println(BLUE + "Done by: Ana and Ihor" + RESET);
     }
 }

@@ -8,10 +8,10 @@ public class PreparedMealItemObserver implements InventoryObserver {
     public void update(Item item) {
         if (item instanceof PreparedMealItem) {
             PreparedMealItem preparedMealItem = (PreparedMealItem) item;
-            System.out.println("Prepared Meal Item updated: " + preparedMealItem.getName());
+            System.out.println("Notification: Prepared Meal Item updated: " + preparedMealItem.getName());
             // Implement logic to handle the update of electronic items
         } else {
-            System.out.println("Observer received an update for a non-prepared meal item.");
+            System.out.println("Notification: Observer received a change/update for a prepared meal item.");
         }
     }
 }

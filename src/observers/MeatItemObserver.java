@@ -8,10 +8,10 @@ public class MeatItemObserver implements InventoryObserver {
     public void update(Item item) {
         if (item instanceof MeatItem) {
             MeatItem meatItem = (MeatItem) item;
-            System.out.println("Meat Item updated: " + meatItem.getName());
+            System.out.println("Notification: Meat Item removed: " + meatItem.getName());
             // Implement logic to handle the update of electronic items
         } else {
-            System.out.println("Observer received an update for a non-meat item.");
+            System.out.println("Notification: Observer received a change/update for a meat item.");
         }
     }
 }

@@ -1,7 +1,4 @@
-import builders.BakeryItemBuilder;
-import builders.HouseItemBuilder;
-import builders.ItemBuilder;
-import builders.SingletonItemBuilder;
+import builders.*;
 import commands.AddItemCommand;
 import commands.Command;
 import commands.RemoveItemCommand;
@@ -11,8 +8,10 @@ import composite.ItemCategory;
 import composite.ItemComponent;
 import decorators.DiscountDecorator;
 import items.Item;
+import observers.BakeryItemObserver;
 import observers.HouseItemObserver;
 import observers.Inventory;
+import observers.MeatItemObserver;
 
 import java.util.Objects;
 import java.util.Scanner;
@@ -20,6 +19,9 @@ import java.util.Scanner;
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
+    public static final String GREEN = "\u001B[32m";
+    public static final String BLUE = "\u001B[34m";
+    public static final String RESET = "\u001B[0m";
     public static void main(String[] args) {
         System.out.println("         ^           ");
         System.out.println("       /   \\        ");
@@ -36,7 +38,7 @@ public class Main {
         SingletonItemBuilder itemBuilder = SingletonItemBuilder.getInstance();
         boolean createAnotherItem = true;
 
-        System.out.print("Do you want to add an item? (yes/no): ");
+        System.out.print(BLUE + "Do you want to create an item? (yes/no): " + RESET);
         String userInput = scanner.nextLine().toLowerCase();
 
         // Item creation using singleton instance of the builder
@@ -64,13 +66,13 @@ public class Main {
                         .setColor(color)
                         .build();
 
-                System.out.println("Created Item: " + newItem.getName());
-                System.out.println("Price: €" + newItem.getPrice());
+                System.out.println(GREEN + "Created Item: " + newItem.getName());
+                System.out.println("Price: €" + newItem.getPrice()+ RESET);
                 if (newItem.getColor() != null) {
-                    System.out.println("Color: " + newItem.getColor());
+                    System.out.println(GREEN + "Color: " + newItem.getColor()+ RESET);
                 }
 
-                System.out.print("Do you want to create another item? (yes/no): ");
+                System.out.print(BLUE + "Do you want to create another item? (yes/no): " + RESET);
                 userInput = scanner.nextLine().toLowerCase();
                 createAnotherItem = userInput.equals("yes");
             } else {
@@ -78,63 +80,36 @@ public class Main {
             }
         }
 
-        // Building an Item
-        ItemBuilder backeryItemBuilder = new BakeryItemBuilder();
-        Item backeryItem = backeryItemBuilder
-                .setName("Generic Item")
-                .setPrice(0.0)
+        // Building a Bakery Item
+        ItemBuilder bakeryItemBuilder = new BakeryItemBuilder();
+        Item bakeryItem = bakeryItemBuilder
+                .setName("Vanilla Muffins")
                 .build();
-        System.out.println("Created Item: " + backeryItem.getName() + " " + backeryItem.getColor());
 
+        // Building a House Item
         ItemBuilder houseItemBuilder = new HouseItemBuilder();
         Item houseItem = houseItemBuilder
-                .setName("Jeans")
+                .setName("Blender")
                 .setPrice(49.99)
+                .setColor("yellow")
                 .build();
 
-        // Create command instances
-        Command addItemCommand = new AddItemCommand(backeryItem);
+        // Building a Meat Item
+        ItemBuilder meatItemBuilder = new MeatItemBuilder();
+        Item meatItem = meatItemBuilder
+                .setName("Salmon")
+                .setPrice(8.29)
+                .build();
+
+        // Create predetermined command instances to show functionality
+        Command addItemCommand = new AddItemCommand(bakeryItem);
         Command updateItemCommand = new UpdateItemCommand(houseItem);
-        Command removeItemCommand = new RemoveItemCommand(backeryItem);
+        Command removeItemCommand = new RemoveItemCommand(meatItem);
 
-        // Execute commands
-        addItemCommand.execute();
-        updateItemCommand.execute();
-        removeItemCommand.execute();
-
-        // Undo the remove command
-        removeItemCommand.undo();
-
-        // Create an electronic item observer
-        HouseItemObserver electronicItemObserver = new HouseItemObserver();
-
-        // Add the observer to the inventory
+        // Create observers to notify update changes
+        HouseItemObserver houseItemObserver = new HouseItemObserver();
+        BakeryItemObserver bakeryItemObserver = new BakeryItemObserver();
+        MeatItemObserver meatItemObserver = new MeatItemObserver();
         Inventory inventory = new Inventory();
-        inventory.addObserver(electronicItemObserver);
-
-        // Notify observers when an item is updated
-        inventory.notifyObservers(backeryItem);
-
-        // Create items to add to category
-        ItemComponent table = new IndividualItem("table", 50.00);
-        System.out.println("Table is created");
-        ItemComponent chair = new IndividualItem("chair", 10.00);
-        System.out.println("Chair is created");
-        ItemCategory houseCategory = new ItemCategory("House");
-        System.out.println("House category is created");
-        houseCategory.addItem(table);
-        System.out.println("Table is added to House category");
-
-        System.out.println("Do you want to add a discount to a chair?");
-        Scanner scannerForDiscount = new Scanner(System.in);
-        String input = scannerForDiscount.nextLine();
-        if (Objects.equals(input, "yes") || Objects.equals(input, "Yes")) {
-            System.out.println("How much in percents do you want the discount to be?");
-            Scanner scannerForDiscountAmount = new Scanner(System.in);
-            double inputAmount = scannerForDiscountAmount.nextDouble();
-            // Add chair in category with discount
-            houseCategory.addItem(new DiscountDecorator(chair, inputAmount));
-            System.out.println("Total price of House items: $" + houseCategory.getPrice());
-        }
     }
 }

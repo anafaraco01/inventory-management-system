@@ -8,10 +8,10 @@ public class BakeryItemObserver implements InventoryObserver {
     public void update(Item item) {
         if (item instanceof BakeryItem) {
             BakeryItem bakeryItem = (BakeryItem) item;
-            System.out.println("Bakery Item updated: " + bakeryItem.getName());
+            System.out.println("Notification: Bakery Item added: " + bakeryItem.getName());
             // Implement logic to handle the update of electronic items
         } else {
-            System.out.println("Observer received an update for a non-bakery item.");
+            System.out.println("Notification: Observer received a change/update for a bakery item.");
         }
     }
 }

@@ -8,10 +8,10 @@ public class HouseItemObserver implements InventoryObserver {
     public void update(Item item) {
         if (item instanceof HouseItem) {
             HouseItem houseItem = (HouseItem) item;
-            System.out.println("Electronic Item updated: " + houseItem.getName());
+            System.out.println("Notification: House Item updated: " + houseItem.getName());
             // Implement logic to handle the update of electronic items
         } else {
-            System.out.println("Observer received an update for a non-electronic item.");
+            System.out.println("Notification: observer received a change/update for a house item.");
         }
     }
 }

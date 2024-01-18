@@ -161,24 +161,25 @@ public class Main {
         ItemComponent table = new IndividualItem("table", 50.00);
         ItemComponent chair = new IndividualItem("chair", 10.00);
         ItemCategory houseCategory = new ItemCategory("House");
-        System.out.println(BLUE + "Do you want to add a table to House category? (yes/no) " + RESET);
-        Scanner scannerForTable = new Scanner(System.in);
-        String tableInput = scannerForTable.nextLine();
-        if (Objects.equals(tableInput, "yes")) {
+        System.out.print(BLUE + "Do you want to add a table to House category? (yes/no): " + RESET);
+        String scannerForTable = scanner.nextLine().toLowerCase();
+        if (scannerForTable.equals("yes")) {
             houseCategory.addItem(table);
-            System.out.println(BLUE + "Table was added to House category" + RESET);
+            System.out.println(GREEN + "Table was added to House category" + RESET);
+            System.out.println("House category contains a Table of €50 and a Chair of €10. Total Price = €60");
+        } else {
+            System.out.println("House category contains a Chair of €10. Total Price = €10");
         }
 
-        System.out.println(BLUE + "Do you want to add a discount to a chair? (yes/no) " + RESET);
-        Scanner scannerForDiscount = new Scanner(System.in);
-        String input = scannerForDiscount.nextLine();
-        if (Objects.equals(input, "yes") || Objects.equals(input, "Yes")) {
-            System.out.println(BLUE + "How much in percentage do you want the discount to be? " + RESET);
+        System.out.print(BLUE + "Do you want to add a discount to the chair? (yes/no): " + RESET);
+        String scannerForDiscount = scanner.nextLine().toLowerCase();
+        if (scannerForDiscount.equals("yes")) {
+            System.out.println(BLUE + "How much in percentage do you want the discount to be?: " + RESET);
             Scanner scannerForDiscountAmount = new Scanner(System.in);
             double inputAmount = scannerForDiscountAmount.nextDouble();
             // Add chair in category with discount
             houseCategory.addItem(new DiscountDecorator(chair, inputAmount));
-            System.out.println("Total price of House items: $" + houseCategory.getPrice());
+            System.out.println("New total price of all House items: $" + houseCategory.getPrice());
         }
 
         System.out.println(BLUE + "Well that's it for today! Thank you for choosing Albert Heijn's Inventory Management System" + RESET);

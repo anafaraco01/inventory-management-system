@@ -1,5 +1,6 @@
 # Inventory Management System for Albert Heijn
 #### By: Ihor Novikov and Ana Rivera Faraco.
+#### GitHub Repo: https://github.com/anafaraco01/inventory-management-system
 
 ## About the Program
 The inventory is based on 6 categories or types of items: Vegetables/fruits, Bakery, Meat, House, Drinks, and Prepared meals. It is a console interface. The interface allows to create items, add items to categories, delete them, update them and add discounts.
